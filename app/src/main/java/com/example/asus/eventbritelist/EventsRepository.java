@@ -1,6 +1,7 @@
 package com.example.asus.eventbritelist;
 
 import data.entities.Event;
+import data.web.WebEventsDataSource;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class EventsRepository {
     }
 
     public void getEvents() {
-
+        WebEventsDataSource.getInstance().getEvents();
     }
 
 //    public void getEventsImage(String breedString, ICallback<String> callback) {

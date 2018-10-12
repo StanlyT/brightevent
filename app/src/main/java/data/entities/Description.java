@@ -7,16 +7,17 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Description implements Parcelable {
+
     public final static Parcelable.Creator<Description> CREATOR = new Creator<Description>() {
+
 
         @Override
         public Description createFromParcel(Parcel in) {
             return new Description(in);
         }
-
         @Override
         public Description[] newArray(int size) {
-            return new Description[size];
+            return (new Description[size]);
         }
 
     };

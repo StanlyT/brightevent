@@ -15,7 +15,6 @@ public class Logo implements Parcelable {
         public Logo createFromParcel(Parcel in) {
             return new Logo(in);
         }
-
         @Override
         public Logo[] newArray(int size) {
             return (new Logo[size]);

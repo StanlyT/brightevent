@@ -1,23 +1,31 @@
 package data.web;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import data.entities.Event;
+import data.entities.EventBrite;
 import data.web.retrofit.EventBriteAPI;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WebEventsDataSource {
-    private static final String TAG = "#";
+    private static final String TAG = "#~";
     private static WebEventsDataSource webEventsDataSource;
-    private final String BASE_URL = "https://www.eventbriteapi.com/v3/events/";
+    private final String BASE_URL = "https://www.eventbriteapi.com/";
     private Retrofit instanceRetrofit;
-    private EventBriteAPI instanceAPI;
+    private EventBriteAPI webAPI;
 
     @SerializedName("events")
     @Expose
@@ -26,9 +34,11 @@ public class WebEventsDataSource {
     private WebEventsDataSource() {
         instanceRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(logLevel())
-//                .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        webAPI = instanceRetrofit.create(EventBriteAPI.class);
+        events = new ArrayList<>();
     }
 
     public static WebEventsDataSource getInstance() {
@@ -36,6 +46,26 @@ public class WebEventsDataSource {
             webEventsDataSource = new WebEventsDataSource();
         }
         return webEventsDataSource;
+    }
+
+    public void getEvents() {
+        Call<EventBrite> call = webAPI.getEvents();
+        call.enqueue(new Callback<EventBrite>() {
+            @Override
+            public void onResponse(Call<EventBrite> call, Response<EventBrite> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "Response list size " + (response != null ? response.body().getEvents().size() : 0));
+                } else {
+                    Log.d(TAG, "onResponse: response was not successful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventBrite> call, Throwable t) {
+                Log.d(TAG, "onFailure");
+                t.printStackTrace();
+            }
+        });
     }
 
     private static OkHttpClient logLevel() {

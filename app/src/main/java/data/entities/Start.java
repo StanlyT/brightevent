@@ -10,6 +10,7 @@ public class Start implements Parcelable {
 
     public final static Parcelable.Creator<Start> CREATOR = new Creator<Start>() {
 
+
         @Override
         public Start createFromParcel(Parcel in) {
             return new Start(in);
@@ -17,7 +18,7 @@ public class Start implements Parcelable {
 
         @Override
         public Start[] newArray(int size) {
-            return new Start[size];
+            return (new Start[size]);
         }
 
     };

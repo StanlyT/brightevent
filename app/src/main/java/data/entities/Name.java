@@ -15,7 +15,6 @@ public class Name implements Parcelable {
         public Name createFromParcel(Parcel in) {
             return new Name(in);
         }
-
         @Override
         public Name[] newArray(int size) {
             return (new Name[size]);

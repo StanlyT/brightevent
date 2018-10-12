@@ -15,7 +15,6 @@ public class Original implements Parcelable {
         public Original createFromParcel(Parcel in) {
             return new Original(in);
         }
-
         @Override
         public Original[] newArray(int size) {
             return (new Original[size]);

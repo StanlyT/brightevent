@@ -10,11 +10,11 @@ public class End implements Parcelable {
 
     public final static Parcelable.Creator<End> CREATOR = new Creator<End>() {
 
+
         @Override
         public End createFromParcel(Parcel in) {
             return new End(in);
         }
-
         @Override
         public End[] newArray(int size) {
             return (new End[size]);
