@@ -10,16 +10,15 @@ public class Event implements Parcelable {
 
     public final static Parcelable.Creator<Event> CREATOR = new Creator<Event>() {
 
-
         @Override
         public Event createFromParcel(Parcel in) {
             return new Event(in);
         }
+
         @Override
         public Event[] newArray(int size) {
             return (new Event[size]);
         }
-
     };
     @SerializedName("name")
     @Expose

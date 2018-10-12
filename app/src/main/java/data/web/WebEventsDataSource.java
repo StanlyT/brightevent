@@ -2,6 +2,7 @@ package data.web;
 
 import android.util.Log;
 
+import com.example.asus.eventbritelist.ICallback;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -48,13 +49,17 @@ public class WebEventsDataSource {
         return webEventsDataSource;
     }
 
-    public void getEvents() {
+    public void getEvents(final ICallback<List<Event>> resultCallback) {
         Call<EventBrite> call = webAPI.getEvents();
         call.enqueue(new Callback<EventBrite>() {
             @Override
             public void onResponse(Call<EventBrite> call, Response<EventBrite> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "Response list size " + (response != null ? response.body().getEvents().size() : 0));
+                    events = response.body().getEvents();
+                    Log.d(TAG, "Response list size "
+                            + (response != null ? events.size() : 0));
+
+                    resultCallback.onResult(events);
                 } else {
                     Log.d(TAG, "onResponse: response was not successful");
                 }
@@ -78,6 +83,4 @@ public class WebEventsDataSource {
                 .build();
         return client;
     }
-
-
 }

@@ -6,33 +6,35 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
 import data.entities.Event;
 
-public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
     private Context context;
+    private List<Event> events;
 
     EventAdapter(Context context){
         this.context = context;
     }
 
+    public void setEvents(List<Event> events){
+        this.events = events;
+    }
+
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public EventAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.event_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        viewHolder.setData(position);
     }
 
     @Override
@@ -42,8 +44,26 @@ public class EventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        public Event event;
+        private TextView name_textview;
+        private TextView description_textview;
+        private ImageView logo_image_view;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            initViews(itemView);
+        }
+
+        public void initViews(View view) {
+            name_textview = view.findViewById(R.id.name_textview);
+            description_textview = view.findViewById(R.id.description_textview);
+            logo_image_view = view.findViewById(R.id.logo_image_view);
+        }
+
+        public void setData(int position) {
+            event = events.get(position);
+            name_textview.setText((CharSequence) event.getName());
+            description_textview.setText((CharSequence) event.getDescription());
         }
     }
 }

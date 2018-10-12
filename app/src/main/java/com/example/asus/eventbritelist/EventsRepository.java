@@ -22,8 +22,8 @@ public class EventsRepository {
         return instance;
     }
 
-    public void getEvents() {
-        WebEventsDataSource.getInstance().getEvents();
+    public void getEvents(ICallback<List<Event>> resultEvents ) {
+        WebEventsDataSource.getInstance().getEvents(resultEvents);
     }
 
 //    public void getEventsImage(String breedString, ICallback<String> callback) {
