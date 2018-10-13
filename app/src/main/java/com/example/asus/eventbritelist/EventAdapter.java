@@ -3,17 +3,21 @@ package com.example.asus.eventbritelist;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import data.entities.Event;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
+    private static final String TAG = "#~";
+
     private Context context;
     private List<Event> events;
 
@@ -22,6 +26,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     }
 
     public void setEvents(List<Event> events){
+        this.events = new ArrayList<>();
         this.events = events;
     }
 
@@ -39,7 +44,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 0;
+        Log.d(TAG, "getItemCount() "+events.size());
+        return events.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,8 +68,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         public void setData(int position) {
             event = events.get(position);
-            name_textview.setText((CharSequence) event.getName());
-            description_textview.setText((CharSequence) event.getDescription());
+            name_textview.setText(event.getName().getText());
+            description_textview.setText(event.getDescription().getText());
         }
     }
 }
