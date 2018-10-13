@@ -1,8 +1,10 @@
 package com.example.asus.eventbritelist;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +71,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         public void setData(int position) {
             event = events.get(position);
             name_textview.setText(event.getName().getText());
-            description_textview.setText(event.getDescription().getText());
+//            description_textview.setText();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                description_textview.setText(Html.fromHtml(event.getDescription().getHtml(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                description_textview.setText(Html.fromHtml(event.getDescription().getHtml()));
+            }
         }
     }
 }
