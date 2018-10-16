@@ -1,5 +1,6 @@
 package com.example.asus.eventbritelist;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView eventsRecyclerView;
     private EventAdapter eventsAdapter;
     private List<Event> events;
+    private Drawable divider;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -30,12 +32,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        EventsRepository.init();
+        EventsRepository.getInstance().getEvents(new ICallback<EventBrite>() {
+            @Override
+            public void onResult(EventBrite resultEvents) {
+                events = resultEvents.getEvents();
+                update();
+                //                eventsRecyclerView.setAdapter(eventsAdapter);
+            }
+        });
     }
 
     private void update() {
         if (events != null) {
-
+            eventsAdapter.setEvents(events);
+            eventsAdapter.notifyDataSetChanged();
+            eventsRecyclerView.setAdapter(eventsAdapter);
         }
+    }
+
+    private void init(Context context) {
+        eventsAdapter = new EventAdapter(context);
+        eventsRecyclerView = findViewById(R.id.recycler_view);
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        divider = getResources().getDrawable(R.drawable.item_divider);
+        eventsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
     }
 
     @Override
@@ -47,23 +68,6 @@ public class MainActivity extends AppCompatActivity {
             events = savedInstanceState.getParcelableArrayList(EVENTS_BUNDLE_KEY);
         }
 
-        eventsAdapter = new EventAdapter(getApplicationContext());
-        eventsRecyclerView = findViewById(R.id.recycler_view);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        EventsRepository.init();
-        EventsRepository.getInstance().getEvents(new ICallback<EventBrite>() {
-            @Override
-            public void onResult(EventBrite resultEvents) {
-                events = resultEvents.getEvents();
-                eventsAdapter.setEvents(events);
-//              Log.d(TAG, ""+events.get(0).getLogo().getOriginal().getUrl());
-                eventsAdapter.notifyDataSetChanged();
-                Drawable divider = getResources().getDrawable(R.drawable.item_divider);
-                eventsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-
-                eventsRecyclerView.setAdapter(eventsAdapter);
-            }
-        });
+        init(this);
     }
 }
