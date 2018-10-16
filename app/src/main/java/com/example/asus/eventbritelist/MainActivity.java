@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResult(EventBrite resultEvents) {
                 events = resultEvents.getEvents();
                 eventsAdapter.setEvents(events);
-                Log.d(TAG, ""+events.size());
                 eventsAdapter.notifyDataSetChanged();
                 Drawable divider = getResources().getDrawable(R.drawable.item_divider);
                 eventsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
