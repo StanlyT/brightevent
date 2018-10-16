@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.List;
 
 import data.entities.Event;
+import data.entities.EventBrite;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "#~";
@@ -30,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         EventsRepository.init();
-        EventsRepository.getInstance().getEvents(new ICallback<List<Event>>(){
+        EventsRepository.getInstance().getEvents(new ICallback<EventBrite>(){
             @Override
-            public void onResult(List<Event> resultEvents) {
-                events = resultEvents;
+            public void onResult(EventBrite resultEvents) {
+                events = resultEvents.getEvents();
                 eventsAdapter.setEvents(events);
                 Log.d(TAG, ""+events.size());
                 eventsAdapter.notifyDataSetChanged();

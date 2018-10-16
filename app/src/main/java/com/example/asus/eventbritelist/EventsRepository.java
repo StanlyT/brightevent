@@ -1,6 +1,7 @@
 package com.example.asus.eventbritelist;
 
 import data.entities.Event;
+import data.entities.EventBrite;
 import data.web.WebEventsDataSource;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class EventsRepository {
         return instance;
     }
 
-    public void getEvents(ICallback<List<Event>> resultEvents ) {
+    public void getEvents(ICallback<EventBrite> resultEvents ) {
         WebEventsDataSource.getInstance().getEvents(resultEvents);
     }
 
