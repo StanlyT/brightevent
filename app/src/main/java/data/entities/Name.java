@@ -9,17 +9,15 @@ import com.google.gson.annotations.SerializedName;
 public class Name implements Parcelable {
 
     public final static Parcelable.Creator<Name> CREATOR = new Creator<Name>() {
-
-
         @Override
         public Name createFromParcel(Parcel in) {
             return new Name(in);
         }
+
         @Override
         public Name[] newArray(int size) {
             return (new Name[size]);
         }
-
     };
     @SerializedName("text")
     @Expose
@@ -60,5 +58,4 @@ public class Name implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }

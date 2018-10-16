@@ -9,12 +9,11 @@ import com.google.gson.annotations.SerializedName;
 public class Pagination implements Parcelable {
 
     public final static Parcelable.Creator<Pagination> CREATOR = new Creator<Pagination>() {
-
-
         @Override
         public Pagination createFromParcel(Parcel in) {
             return new Pagination(in);
         }
+
         @Override
         public Pagination[] newArray(int size) {
             return (new Pagination[size]);
@@ -99,5 +98,4 @@ public class Pagination implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }

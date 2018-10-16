@@ -7,10 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Start implements Parcelable {
-
     public final static Parcelable.Creator<Start> CREATOR = new Creator<Start>() {
-
-
         @Override
         public Start createFromParcel(Parcel in) {
             return new Start(in);
@@ -20,7 +17,6 @@ public class Start implements Parcelable {
         public Start[] newArray(int size) {
             return (new Start[size]);
         }
-
     };
     @SerializedName("timezone")
     @Expose
@@ -74,5 +70,4 @@ public class Start implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }

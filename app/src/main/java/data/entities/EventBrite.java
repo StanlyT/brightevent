@@ -16,11 +16,11 @@ public class EventBrite implements Parcelable {
         public EventBrite createFromParcel(Parcel in) {
             return new EventBrite(in);
         }
+
         @Override
         public EventBrite[] newArray(int size) {
             return (new EventBrite[size]);
         }
-
     };
     @SerializedName("pagination")
     @Expose

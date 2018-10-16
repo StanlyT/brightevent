@@ -7,9 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Event implements Parcelable {
-
     public final static Parcelable.Creator<Event> CREATOR = new Creator<Event>() {
-
         @Override
         public Event createFromParcel(Parcel in) {
             return new Event(in);
@@ -553,5 +551,4 @@ public class Event implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }
