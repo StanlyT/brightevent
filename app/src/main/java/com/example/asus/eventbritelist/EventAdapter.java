@@ -1,6 +1,7 @@
 package com.example.asus.eventbritelist;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import data.entities.Event;
+import retrofit2.http.Url;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
     private static final String TAG = "#~";
@@ -23,11 +29,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     private Context context;
     private List<Event> events;
 
-    EventAdapter(Context context){
+    EventAdapter(Context context) {
         this.context = context;
     }
 
-    public void setEvents(List<Event> events){
+    public void setEvents(List<Event> events) {
         this.events = new ArrayList<>();
         this.events = events;
     }
@@ -46,7 +52,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount() "+events.size());
         return events.size();
     }
 
@@ -71,13 +76,20 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         public void setData(int position) {
             event = events.get(position);
             name_textview.setText(event.getName().getText());
-//            description_textview.setText();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 description_textview.setText(Html.fromHtml(event.getDescription().getHtml(), Html.FROM_HTML_MODE_COMPACT));
             } else {
                 description_textview.setText(Html.fromHtml(event.getDescription().getHtml()));
             }
+
+            if (event.getLogo() != null) {
+//                Log.d(TAG, "position -" + position + "- logo_image_view +" + event.getLogo().getOriginal().getUrl());
+                Glide.with(context)
+                        .load(event.getLogo().getOriginal().getUrl())
+                        .into(logo_image_view);
+            }
+
         }
     }
 }
