@@ -46,22 +46,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void update() {
-        if (events != null) {
-            eventsAdapter.setEvents(events);
-            eventsAdapter.notifyDataSetChanged();
-            eventsRecyclerView.setAdapter(eventsAdapter);
-        }
-    }
-
-    private void init(Context context) {
-        eventsAdapter = new EventAdapter(context);
-        eventsRecyclerView = findViewById(R.id.recycler_view);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        divider = getResources().getDrawable(R.drawable.item_divider);
-        eventsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,5 +56,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         init(this);
+    }
+
+    private void update() {
+        eventsAdapter.setEvents(events);
+        eventsAdapter.notifyDataSetChanged();
+        eventsRecyclerView.setAdapter(eventsAdapter);
+    }
+
+    private void init(Context context) {
+        eventsAdapter = new EventAdapter(context);
+        eventsRecyclerView = findViewById(R.id.recycler_view);
+        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        divider = getResources().getDrawable(R.drawable.item_divider);
+        eventsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
     }
 }

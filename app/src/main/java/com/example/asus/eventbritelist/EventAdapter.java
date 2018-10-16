@@ -1,12 +1,10 @@
 package com.example.asus.eventbritelist;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import data.entities.Event;
-import retrofit2.http.Url;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
     private static final String TAG = "#~";
@@ -89,7 +84,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                         .load(event.getLogo().getOriginal().getUrl())
                         .into(logo_image_view);
             }
-
         }
     }
 }
