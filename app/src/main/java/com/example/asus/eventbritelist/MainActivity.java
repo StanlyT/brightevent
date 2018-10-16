@@ -32,15 +32,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        EventsRepository.init();
-        EventsRepository.getInstance().getEvents(new ICallback<EventBrite>() {
-            @Override
-            public void onResult(EventBrite resultEvents) {
-                events = resultEvents.getEvents();
-                update();
-                //                eventsRecyclerView.setAdapter(eventsAdapter);
-            }
-        });
+        if (events == null) {
+            EventsRepository.init();
+            EventsRepository.getInstance().getEvents(new ICallback<EventBrite>() {
+                @Override
+                public void onResult(EventBrite resultEvents) {
+                    events = resultEvents.getEvents();
+                    update();
+                }
+            });
+        } else {
+            update();
+        }
     }
 
     private void update() {
