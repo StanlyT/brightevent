@@ -9,8 +9,6 @@ import com.google.gson.annotations.SerializedName;
 public class Logo implements Parcelable {
 
     public final static Parcelable.Creator<Logo> CREATOR = new Creator<Logo>() {
-
-
         @Override
         public Logo createFromParcel(Parcel in) {
             return new Logo(in);
@@ -20,7 +18,6 @@ public class Logo implements Parcelable {
         public Logo[] newArray(int size) {
             return (new Logo[size]);
         }
-
     };
     @SerializedName("crop_mask")
     @Expose
@@ -126,5 +123,4 @@ public class Logo implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }

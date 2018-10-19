@@ -7,9 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Event implements Parcelable {
-
     public final static Parcelable.Creator<Event> CREATOR = new Creator<Event>() {
-
         @Override
         public Event createFromParcel(Parcel in) {
             return new Event(in);
@@ -19,7 +17,6 @@ public class Event implements Parcelable {
         public Event[] newArray(int size) {
             return (new Event[size]);
         }
-
     };
     @SerializedName("name")
     @Expose
@@ -145,7 +142,6 @@ public class Event implements Parcelable {
     protected Event(Parcel in) {
         this.name = ((Name) in.readValue((Name.class.getClassLoader())));
         this.description = ((Description) in.readValue((Description.class.getClassLoader())));
-        this.logo = ((Logo) in.readValue((Logo.class.getClassLoader())));
         this.id = ((String) in.readValue((String.class.getClassLoader())));
         this.url = ((String) in.readValue((String.class.getClassLoader())));
         this.start = ((Start) in.readValue((Start.class.getClassLoader())));
@@ -183,6 +179,7 @@ public class Event implements Parcelable {
         this.formatId = ((String) in.readValue((String.class.getClassLoader())));
         this.resourceUri = ((String) in.readValue((String.class.getClassLoader())));
         this.isExternallyTicketed = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.logo = ((Logo) in.readValue((Logo.class.getClassLoader())));
     }
 
     public Event() {

@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Description implements Parcelable {
+
     public final static Parcelable.Creator<Description> CREATOR = new Creator<Description>() {
 
         @Override
@@ -16,9 +17,8 @@ public class Description implements Parcelable {
 
         @Override
         public Description[] newArray(int size) {
-            return new Description[size];
+            return (new Description[size]);
         }
-
     };
     @SerializedName("text")
     @Expose
@@ -59,5 +59,4 @@ public class Description implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
 }
