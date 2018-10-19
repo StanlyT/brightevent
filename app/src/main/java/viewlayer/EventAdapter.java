@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,9 +53,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         Event event;
-        private TextView name_textview;
-        private TextView description_textview;
-        private ImageView logo_image_view;
+        private TextView nameTextview;
+        private TextView descriptionTextview;
+        private ImageView logoImageView;
+        private ProgressBar progressBar;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,25 +64,29 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         }
 
         private void initViews(View view) {
-            name_textview = view.findViewById(R.id.name_textview);
-            description_textview = view.findViewById(R.id.description_textview);
-            logo_image_view = view.findViewById(R.id.logo_image_view);
+            nameTextview = view.findViewById(R.id.name_textview);
+            descriptionTextview = view.findViewById(R.id.description_textview);
+            logoImageView = view.findViewById(R.id.logo_image_view);
+            progressBar = view.findViewById(R.id.event_item_progressbar);
         }
 
         public void setData(int position) {
+            progressBar.setVisibility(View.VISIBLE);
             event = events.get(position);
-            name_textview.setText(event.getName().getText());
+            nameTextview.setText(event.getName().getText());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                description_textview.setText(Html.fromHtml(event.getDescription().getHtml(), Html.FROM_HTML_MODE_COMPACT));
+                descriptionTextview.setText(Html.fromHtml(event.getDescription().getHtml(),
+                        Html.FROM_HTML_MODE_COMPACT));
             } else {
-                description_textview.setText(Html.fromHtml(event.getDescription().getHtml()));
+                descriptionTextview.setText(Html.fromHtml(event.getDescription().getHtml()));
             }
 
             if (event.getLogo() != null) {
                 Glide.with(context)
                         .load(event.getLogo().getOriginal().getUrl())
-                        .into(logo_image_view);
+                        .into(logoImageView);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }

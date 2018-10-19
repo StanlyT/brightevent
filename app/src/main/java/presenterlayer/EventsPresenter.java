@@ -1,7 +1,5 @@
 package presenterlayer;
 
-import android.util.Log;
-
 import java.util.List;
 
 import data.entities.Event;
@@ -22,14 +20,17 @@ public class EventsPresenter implements IPresenterLayer {
 
     @Override
     public void loadEvents() {
+        view.showProgressBar();
         if (repository.isEventsEmpty()) {
             repository.getEvents(resultEvents -> {
                 List<Event> events = resultEvents.getEvents();
                 repository.init(events);
                 view.updateView(events);
+                view.hideProgressBar();
             });
         } else {
             view.updateView(repository.getCacheEvents());
+            view.hideProgressBar();
         }
     }
 }
