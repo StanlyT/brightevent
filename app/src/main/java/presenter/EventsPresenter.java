@@ -1,19 +1,19 @@
-package presenterlayer;
+package presenter;
 
 import java.util.List;
 
 import data.entities.Event;
 import data.entities.EventBrite;
-import modellayer.EventsRepository;
-import modellayer.ICallback;
-import modellayer.IModelLayer;
-import viewlayer.IViewLayer;
+import model.EventsRepository;
+import model.ICallback;
+import model.EventsModelMVP;
+import view.EventsViewMVP;
 
-public class EventsPresenter implements IPresenterLayer {
-    private IViewLayer view;
-    private IModelLayer<List<Event>, ICallback<EventBrite>> repository;
+public class EventsPresenter implements EventPresenterMVP {
+    private EventsViewMVP view;
+    private EventsModelMVP<List<Event>, ICallback<EventBrite>> repository;
 
-    public EventsPresenter(IViewLayer view) {
+    public EventsPresenter(EventsViewMVP view) {
         this.view = view;
         repository = EventsRepository.getInstance();
     }

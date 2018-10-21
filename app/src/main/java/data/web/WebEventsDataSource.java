@@ -2,7 +2,6 @@ package data.web;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import data.entities.EventBrite;
@@ -10,14 +9,14 @@ import data.web.retrofit.EventBriteAPI;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import modellayer.ICallback;
+import model.ICallback;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WebEventsDataSource {
-    private static WebEventsDataSource webEventsDataSource;
+    private static volatile WebEventsDataSource instance;
     private EventBriteAPI webAPI;
 
     private WebEventsDataSource() {
@@ -32,10 +31,16 @@ public class WebEventsDataSource {
     }
 
     public static WebEventsDataSource getInstance() {
-        if (webEventsDataSource == null) {
-            webEventsDataSource = new WebEventsDataSource();
+        WebEventsDataSource localInstance = instance;
+        if (localInstance == null) {
+            synchronized (WebEventsDataSource.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new WebEventsDataSource();
+                }
+            }
         }
-        return webEventsDataSource;
+        return localInstance;
     }
 
     public void requestEvents(final ICallback<EventBrite> resultCallback) {

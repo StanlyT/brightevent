@@ -1,4 +1,4 @@
-package modellayer;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,19 +7,25 @@ import data.entities.Event;
 import data.entities.EventBrite;
 import data.web.WebEventsDataSource;
 
-public class EventsRepository implements IModelLayer<List<Event>, ICallback<EventBrite>> {
-    private static EventsRepository instance;
+public class EventsRepository implements EventsModelMVP<List<Event>, ICallback<EventBrite>> {
+    private static volatile EventsRepository instance;
     private List<Event> events;
 
     private EventsRepository() {
     }
 
     public static EventsRepository getInstance() {
-        if (instance == null) {
-            instance = new EventsRepository();
-            instance.events = new ArrayList<>();
+        EventsRepository localInstance = instance;
+        if (localInstance == null) {
+            synchronized (EventsRepository.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new EventsRepository();
+                    localInstance.events = new ArrayList<>();
+                }
+            }
         }
-        return instance;
+        return localInstance;
     }
 
     @Override

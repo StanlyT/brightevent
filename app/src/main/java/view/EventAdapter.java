@@ -1,4 +1,4 @@
-package viewlayer;
+package view;
 
 import android.content.Context;
 import android.os.Build;
