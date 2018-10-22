@@ -1,5 +1,7 @@
 package presenter;
 
+import android.support.v7.app.AppCompatActivity;
+
 import java.util.List;
 
 import data.entities.Event;
@@ -7,15 +9,26 @@ import data.entities.EventBrite;
 import model.EventsRepository;
 import model.ICallback;
 import model.EventsModelMVP;
+import view.EventsActivity;
 import view.EventsViewMVP;
 
-public class EventsPresenter implements EventPresenterMVP {
+public class EventsPresenter implements EventPresenterMVP<EventsViewMVP> {
     private EventsViewMVP view;
     private EventsModelMVP<List<Event>, ICallback<EventBrite>> repository;
 
-    public EventsPresenter(EventsViewMVP view) {
+    public EventsPresenter(EventsRepository model) {
+        repository = model;
+    }
+
+    @Override
+    public void bind(EventsViewMVP view) {
         this.view = view;
         repository = EventsRepository.getInstance();
+    }
+
+    @Override
+    public void unBind() {
+        view = null;
     }
 
     @Override

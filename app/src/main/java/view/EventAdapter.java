@@ -1,8 +1,10 @@
 package view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -13,6 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.asus.eventbritelist.R;
 
 import java.util.ArrayList;
@@ -82,12 +88,26 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 descriptionTextview.setText(Html.fromHtml(event.getDescription().getHtml()));
             }
 
-            if (event.getLogo() != null) {
-                Glide.with(context)
-                        .load(event.getLogo().getOriginal().getUrl())
-                        .into(logoImageView);
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+            Glide.with(context)
+                    .load(event.getLogo().getOriginal().getUrl())
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                    Target<Drawable> target,
+                                                    boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model,
+                                                       Target<Drawable> target,
+                                                       DataSource dataSource,
+                                                       boolean isFirstResource) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            return false;
+                        }
+                    })
+                    .into(logoImageView);
         }
     }
 }
