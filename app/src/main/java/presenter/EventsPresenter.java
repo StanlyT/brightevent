@@ -47,3 +47,22 @@ public class EventsPresenter implements EventPresenterMVP<EventsViewMVP> {
         }
     }
 }
+
+
+//
+//    @Override
+//    public void loadEvents() {
+//        view.showProgressBar();
+//        if (repository.isEventsEmpty()) {
+//            repository.getEvents(resultEvents -> {
+//                List<Event> events = resultEvents.getEvents();
+//                repository.init(events);
+//                view.updateView(events);
+//                view.hideProgressBar();
+//            });
+//        } else {
+//            view.updateView(repository.getCacheEvents());
+//            view.hideProgressBar();
+//        }
+//    }
+

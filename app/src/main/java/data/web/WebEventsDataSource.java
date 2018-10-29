@@ -43,13 +43,13 @@ public class WebEventsDataSource {
         return localInstance;
     }
 
-    public void requestEvents(final ICallback<EventBrite> resultCallback) {
-        Single<EventBrite> single = webAPI.getEvents();
-        single.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(eventBrite ->
-                        resultCallback.onResult(eventBrite), throwable -> {
-                });
+    public Single<EventBrite> requestEvents() {
+        return webAPI.getEvents();
+//        single.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(eventBrite ->
+//                        resultCallback.onResult(eventBrite), throwable -> {
+//                });
     }
 
     private static OkHttpClient logLevel() {

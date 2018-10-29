@@ -6,6 +6,10 @@ import java.util.List;
 import data.entities.Event;
 import data.entities.EventBrite;
 import data.web.WebEventsDataSource;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class EventsRepository implements EventsModelMVP<List<Event>, ICallback<EventBrite>> {
     private static volatile EventsRepository instance;
@@ -29,9 +33,29 @@ public class EventsRepository implements EventsModelMVP<List<Event>, ICallback<E
     }
 
     @Override
-    public void getEvents(ICallback<EventBrite> resultEvents) {
-        WebEventsDataSource.getInstance().requestEvents(resultEvents);
-    }
+    public Single<EventBrite> getEvents(final ICallback<EventBrite> resultCallback) {
+        if (isEventsEmpty()) {
+            return WebEventsDataSource.getInstance().requestEvents()
+                    .doOnSuccess(new Consumer<EventBrite>() {
+                        @Override
+                        public void accept(EventBrite eventBrite) throws Exception {
+                            events = eventBrite.getEvents();
+                        }
+                    });
+        } else {
+
+//            view.updateView(repository.getCacheEvents());
+//            view.hideProgressBar();
+        }
+
+
+//        WebEventsDataSource.getInstance().requestEvents(resultEvents -> {
+//            List<Event> events = resultEvents.getEvents();
+//            init(events);
+//            view.updateView(events);
+//            view.hideProgressBar();
+
+}
 
     @Override
     public void init(List<Event> args) {
